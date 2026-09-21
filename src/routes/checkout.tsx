@@ -80,8 +80,7 @@ function CheckoutPage() {
 
   const [errors, setErrors] = useState<FormErrors>({});
 
-  const minimumOrder = empresa.pedidoMinimo;
-  const belowMinimum = cartTotal < minimumOrder;
+  // Sem pedido mínimo — qualquer valor pode ser enviado.
 
   if (items.length === 0 && !submitted) {
     return (
@@ -183,16 +182,7 @@ function CheckoutPage() {
           Finalizar Pedido
         </h1>
 
-        {belowMinimum && (
-          <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4">
-            <p className="text-sm text-amber-800">
-              O valor mínimo do pedido é {formatPrice(minimumOrder)}. Continue adicionando produtos ao carrinho.
-            </p>
-            <Button asChild variant="outline" className="mt-3">
-              <Link to="/produtos">Adicionar mais produtos</Link>
-            </Button>
-          </div>
-        )}
+
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-6" noValidate>
           {/* Dados do cliente */}
@@ -352,7 +342,7 @@ function CheckoutPage() {
           {/* Botão de envio */}
           <Button
             type="submit"
-            disabled={belowMinimum}
+  
             className="w-full"
             size="lg"
           >
@@ -362,11 +352,7 @@ function CheckoutPage() {
             Enviar pedido pelo WhatsApp
           </Button>
 
-          {belowMinimum && (
-            <p className="text-center text-xs text-muted-foreground">
-              Adicione {formatPrice(minimumOrder - cartTotal)} mais para atingir o pedido mínimo.
-            </p>
-          )}
+
         </form>
       </main>
 

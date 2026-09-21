@@ -3,46 +3,35 @@
 
 export const empresa = {
   nome: "Sumel",
-  tagline: "Doces que fazem a festa acontecer",
+  tagline: "Atacado para Confeitaria, Guloseimas e Embalagens",
   descricao:
-    "A Sumel é referência em confeitaria no Rio Grande do Sul. Fornecemos para lanchonetes, restaurantes, pizzarias, açaiterias e deliverys com produtos de qualidade, preço justo e entrega pontual.",
+    "A Sumel fornece produtos para confeitaria, guloseimas, embalagens e muito mais. Atendemos lanchonetes, restaurantes, pizzarias, deliverys, açaiterias e outros negócios com qualidade e preço justo.",
 
-  whatsapp: "5599999999999", // formato: DDD + número, só números
+  whatsapp: "5134744368", // formato: DDD + número, só números
 
-  endereco: "Rua das Flores, 123 — Centro, Sapucaia do Sul — RS",
+  instagram: "@Sumellojas",
+  site: "https://www.sumel.com.br",
 
-  horarios: "Seg a Sex: 7h às 18h | Sáb: 7h às 12h",
+  lojas: [
+    {
+      nome: "Sapucaia do Sul",
+      endereco: "Av. João Pereira de Vargas, 943 — Camboim",
+    },
+    {
+      nome: "Esteio",
+      endereco: "Av. Padre Claret, 382 — Centro",
+    },
+    {
+      nome: "São Leopoldo",
+      endereco: "Rua Independência, 878 — Centro",
+    },
+  ],
 
-  pedidoMinimo: "Pedido mínimo: R$ 50,00",
-
-  redes: {
-    instagram: "https://instagram.com/sumel",
-    facebook: "https://facebook.com/sumel",
+  horarios: {
+    diasUteis: "Seg a Sex: 8h30–12h / 13h30–18h30",
+    sabado: "Sábado: 9h–12h / 13h30–17h",
+    domingo: "Domingo: fechado",
   },
-
-  subcategorias: {
-    confeitaria: [
-      { slug: "chocolates-coberturas", label: "Chocolates e Coberturas" },
-      { slug: "corantes-essencias", label: "Corantes e Essências" },
-      { slug: "formas-utensilios", label: "Formas e Utensílios" },
-      { slug: "decoracao-confeitos", label: "Decoração e Confeitos" },
-      { slug: "recheios-pastas", label: "Recheios e Pastas" },
-    ],
-    guloseimas: [
-      { slug: "doces-finados", label: "Doces Finados" },
-      { slug: "doces-natal", label: "Doces de Natal" },
-      { slug: "pascoa", label: "Páscoa" },
-      { slug: "festa-junina", label: "Festa Junina" },
-      { slug: "mesa-festa", label: "Mesa de Festa" },
-    ],
-    embalagens: [
-      { slug: "lanchonetes", label: "Lanchonetes" },
-      { slug: "restaurantes", label: "Restaurantes" },
-      { slug: "pizzarias", label: "Pizzarias" },
-      { slug: "acaiterias", label: "Açaiterias" },
-      { slug: "delivery", label: "Delivery" },
-    ],
-  } as const,
 
   // Links do menu
   links: {

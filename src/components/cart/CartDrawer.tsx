@@ -80,9 +80,7 @@ function QuantitySelector({
 export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
   const { items, updateQuantity, removeItem, clearCart, cartTotal } = useCart();
 
-  const minimumOrder = 5000; // R$ 50,00 em centavos
-  const belowMinimum = cartTotal < minimumOrder;
-  const missing = minimumOrder - cartTotal;
+  // Sem pedido mínimo — qualquer valor pode ser enviado.
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
@@ -178,15 +176,10 @@ export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
                   {formatPrice(cartTotal)}
                 </span>
               </div>
-              {belowMinimum && (
-                <p className="mt-2 text-xs text-amber-600">
-                  Faltam {formatPrice(missing)} para atingir o pedido mínimo de {formatPrice(minimumOrder)}.
-                </p>
-              )}
+              
             </div>
             <Button
               asChild
-              disabled={belowMinimum}
               className="w-full"
               size="lg"
             >
@@ -194,11 +187,7 @@ export function CartDrawer({ open, onOpenChange }: CartDrawerProps) {
                 Finalizar Pedido
               </Link>
             </Button>
-            {!belowMinimum && (
-              <p className="text-center text-xs text-muted-foreground">
-                Pedido mínimo atingido ✓
-              </p>
-            )}
+
           </DrawerFooter>
         )}
       </DrawerContent>
