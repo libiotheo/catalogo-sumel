@@ -6,6 +6,9 @@ import type { Category } from "@/types";
 import productsData from "@/data/products.json";
 import type { Product } from "@/types";
 import { Header } from "@/components/layout/Header";
+import { useCart } from "@/hooks/useCart";
+import { CartDrawer } from "@/components/cart/CartDrawer";
+import { toast } from "sonner";
 
 const products = productsData as Product[];
 
@@ -31,6 +34,8 @@ export const Route = createFileRoute("/produtos")({
 function ProdutosPage() {
   const [search, setSearch] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<Category | "todos">("todos");
+  const [cartOpen, setCartOpen] = useState(false);
+  const { addItem, isInCart, getQuantity, updateQuantity } = useCart();
 
   const filtered = useMemo(() => {
     return products.filter((p) => {
@@ -47,6 +52,7 @@ function ProdutosPage() {
   return (
     <div className="min-h-screen bg-background">
       <Header />
+      <CartDrawer open={cartOpen} onOpenChange={setCartOpen} />
 
       <main className="mx-auto max-w-6xl px-4 py-6">
         <div className="mb-6">
@@ -175,12 +181,72 @@ function ProdutosPage() {
                   {product.minQuantity && product.minQuantity > 1 && (
                     <p className="mt-0.5 text-xs text-amber-600">Mín. {product.minQuantity}</p>
                   )}
+                  
+                  {/* Botão adicionar ao carrinho */}
+                  {isInCart(product.id) ? (
+                    <div className="mt-2 flex items-center justify-between gap-2">
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          const current = getQuantity(product.id);
+                          if (current > 1) {
+                            updateQuantity(product.id, current - 1);
+                          } else {
+                            updateQuantity(product.id, 0);
+                          }
+                        }}
+                        className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card text-sm font-medium transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        aria-label="Diminuir quantidade"
+                      >
+                        −
+                      </button>
+                      <span className="text-sm font-medium">{getQuantity(product.id)}</span>
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          updateQuantity(product.id, getQuantity(product.id) + 1);
+                        }}
+                        className="flex h-8 w-8 items-center justify-center rounded-full border border-border bg-card text-sm font-medium transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                        aria-label="Aumentar quantidade"
+                      >
+                        +
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        addItem(product, product.minQuantity || 1);
+                        toast.success(`${product.name} adicionado ao carrinho`);
+                      }}
+                      className="mt-2 w-full rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    >
+                      Adicionar
+                    </button>
+                  )}
                 </div>
               </article>
             ))}
           </div>
         )}
       </main>
+
+      {/* Botão flutuante do carrinho no mobile */}
+      <button
+        onClick={() => setCartOpen(true)}
+        className="fixed bottom-6 right-6 z-30 flex items-center gap-2 rounded-full bg-primary px-4 py-3 text-sm font-medium text-primary-foreground shadow-lg transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring lg:hidden"
+        aria-label="Abrir carrinho"
+      >
+        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        Carrinho
+        {totalItems > 0 && (
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#3D1F2B] text-[10px] font-bold text-white">
+            {totalItems}
+          </span>
+        )}
+      </button>
 
       <footer className="border-t border-border bg-card py-6 mt-12">
         <div className="mx-auto max-w-6xl px-4 text-center text-xs text-muted-foreground">
@@ -189,4 +255,12 @@ function ProdutosPage() {
       </footer>
     </div>
   );
+}
+
+function totalItems() {
+  return 0;
+}
+function totalItems() {
+  const { items } = useCart();
+  return items.reduce((sum, i) => sum + i.quantity, 0);
 }
