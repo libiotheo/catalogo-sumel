@@ -80,7 +80,7 @@ function CheckoutPage() {
 
   const [errors, setErrors] = useState<FormErrors>({});
 
-  const minimumOrder = 5000; // R$ 50,00 em centavos
+  const minimumOrder = empresa.pedidoMinimo;
   const belowMinimum = cartTotal < minimumOrder;
 
   if (items.length === 0 && !submitted) {

@@ -63,7 +63,7 @@ function ProdutosPage() {
   const [cartOpen, setCartOpen] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [localBusca, setLocalBusca] = useState(search.busca);
-  const { addItem, isInCart, getQuantity, updateQuantity } = useCart();
+  const { addItem, isInCart, getQuantity, updateQuantity, totalItems } = useCart();
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Sync local busca with URL param
@@ -416,7 +416,7 @@ function ProdutosPage() {
     );
   }
 
-  const totalItems2 = items.reduce((sum, i) => sum + i.quantity, 0);
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -547,9 +547,9 @@ function ProdutosPage() {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
         </svg>
         Carrinho
-        {totalItems2 > 0 && (
+        {totalItems > 0 && (
           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#3D1F2B] text-[10px] font-bold text-white">
-            {totalItems2 > 99 ? "99+" : totalItems2}
+            {totalItems > 99 ? "99+" : totalItems}
           </span>
         )}
       </button>
