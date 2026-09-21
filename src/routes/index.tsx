@@ -159,6 +159,9 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const instagramLink = `https://instagram.com/${empresa.instagram.replace("@", "")}`;
+  const whatsappLink = `https://wa.me/55${empresa.whatsapp}`;
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -365,10 +368,10 @@ function Index() {
             </div>
             <div>
               <h3 className="mb-3 font-heading text-base font-semibold text-foreground">Contato</h3>
-              <ul className="space-y-2.5 text-sm text-muted-foreground">
+              <ul className="space-y-3 text-sm text-muted-foreground">
                 <li>
                   <a
-                    href={`https://wa.me/55${empresa.whatsapp}`}
+                    href={whatsappLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 text-green-600 transition-colors hover:text-green-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded px-1 py-0.5 -mx-1 -my-0.5"
@@ -379,18 +382,27 @@ function Index() {
                     WhatsApp
                   </a>
                 </li>
+                {empresa.lojas.map((loja) => (
+                  <li key={loja.nome} className="flex items-start gap-1.5">
+                    <svg className="mt-0.5 h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span>
+                      <span className="font-medium text-foreground">{loja.nome}</span>:{" "}
+                      {loja.endereco}
+                    </span>
+                  </li>
+                ))}
                 <li className="flex items-start gap-1.5">
                   <svg className="mt-0.5 h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  {empresa.endereco}
-                </li>
-                <li className="flex items-center gap-1.5">
-                  <svg className="h-4 w-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  {empresa.horarios}
+                  <span>
+                    {empresa.horarios.diasUteis}{"\n"}
+                    {empresa.horarios.sabado}{"\n"}
+                    {empresa.horarios.domingo}
+                  </span>
                 </li>
               </ul>
             </div>
@@ -420,7 +432,7 @@ function Index() {
               </ul>
               <div className="mt-4 flex gap-3">
                 <a
-                  href={empresa.redes.instagram}
+                  href={instagramLink}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded p-1"
@@ -431,14 +443,14 @@ function Index() {
                   </svg>
                 </a>
                 <a
-                  href={empresa.redes.facebook}
+                  href={empresa.site}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded p-1"
-                  aria-label="Facebook da Sumel"
+                  aria-label="Site da Sumel"
                 >
-                  <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                   </svg>
                 </a>
               </div>
