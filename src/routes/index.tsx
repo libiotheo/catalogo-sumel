@@ -7,6 +7,7 @@ import productsData from "@/data/products.json";
 import type { Product } from "@/types";
 import { useCart } from "@/hooks/useCart";
 import { toast } from "sonner";
+import { Header } from "@/components/layout/Header";
 
 const products = productsData as Product[];
 const featured = products.filter((p) => p.featured);
@@ -164,28 +165,7 @@ function Index() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-          <Link
-            to="/"
-            className="font-heading text-xl font-bold tracking-tight text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded px-1 py-0.5 shrink-0"
-          >
-            {empresa.nome}
-          </Link>
-          <nav className="flex items-center gap-4 text-sm font-medium text-muted-foreground">
-            <Link to="/produtos" className="hidden sm:block transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded px-2 py-1">
-              Catálogo
-            </Link>
-            <Link
-              to="/checkout"
-              className="rounded-full bg-primary px-4 py-1.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              Carrinho
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <Header />
 
       <main>
         {/* Hero */}
@@ -226,15 +206,15 @@ function Index() {
         <section className="px-4 py-12">
           <div className="mx-auto max-w-6xl">
             <h2 className="font-heading text-2xl font-bold text-foreground sm:text-3xl">
-              Nossos produtos
+              Compre por categoria
             </h2>
-            <p className="mt-1 text-sm text-muted-foreground">Clique e veja tudo de cada categoria</p>
-            <div className="mt-8 grid gap-4 sm:grid-cols-3">
+            <p className="mt-1 text-sm text-muted-foreground">Encontre rapidamente o que seu negócio precisa</p>
+            <div className="mt-5 flex gap-2 overflow-x-auto pb-2 sm:grid sm:grid-cols-3 sm:overflow-visible">
               {categoryCards.map(({ category, description }) => (
                 <Link
                   key={category}
                   to={`/produtos/${category}`}
-                  className="group flex flex-col items-center gap-3 rounded-2xl border border-border bg-card p-6 text-center shadow-sm transition-shadow hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="group flex min-w-[190px] flex-col items-center gap-3 rounded-xl border border-border bg-card p-4 text-center transition-colors hover:border-primary/40 hover:bg-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:min-w-0"
                 >
                   <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 transition-colors group-hover:bg-primary/20">
                     <svg className="h-7 w-7 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
