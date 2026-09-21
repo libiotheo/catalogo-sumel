@@ -21,6 +21,16 @@ function saveCart(items: CartItem[]) {
   }
 }
 
+/**
+ * Normaliza a quantidade para respeitar o minQuantity do produto.
+ * Retorna 0 para sinalizar que o item deve ser removido.
+ */
+function normalizeQuantity(product: Product, quantity: number): number {
+  const min = product.minQuantity ?? 1;
+  if (quantity < min) return 0;
+  return quantity;
+}
+
 export function useCart() {
   const [items, setItems] = useState<CartItem[]>(() => loadCart());
 
@@ -28,15 +38,23 @@ export function useCart() {
     saveCart(items);
   }, [items]);
 
+  /**
+   * Adiciona produto ao carrinho.
+   * Se o produto já existe, soma a quantidade — nunca abaixo do minQuantity.
+   */
   const addItem = useCallback((product: Product, quantity: number = 1) => {
+    const min = product.minQuantity ?? 1;
+    const safeQty = Math.max(quantity, min);
     setItems((prev) => {
       const existing = prev.find((i) => i.product.id === product.id);
       if (existing) {
+        const newQty = normalizeQuantity(product, existing.quantity + safeQty);
+        if (newQty === 0) return prev.filter((i) => i.product.id !== product.id);
         return prev.map((i) =>
-          i.product.id === product.id ? { ...i, quantity: i.quantity + quantity } : i
+          i.product.id === product.id ? { ...i, quantity: newQty } : i
         );
       }
-      return [...prev, { product, quantity }];
+      return [...prev, { product, quantity: safeQty }];
     });
   }, []);
 
@@ -44,15 +62,23 @@ export function useCart() {
     setItems((prev) => prev.filter((i) => i.product.id !== productId));
   }, []);
 
+  /**
+   * Atualiza quantidade de um item no carrinho.
+   * Se a nova quantidade for inferior ao minQuantity, remove o item.
+   */
   const updateQuantity = useCallback((productId: string, quantity: number) => {
-    if (quantity <= 0) {
-      removeItem(productId);
-      return;
-    }
-    setItems((prev) =>
-      prev.map((i) => (i.product.id === productId ? { ...i, quantity } : i))
-    );
-  }, [removeItem]);
+    setItems((prev) => {
+      const item = prev.find((i) => i.product.id === productId);
+      if (!item) return prev;
+      const normalized = normalizeQuantity(item.product, quantity);
+      if (normalized === 0) {
+        return prev.filter((i) => i.product.id !== productId);
+      }
+      return prev.map((i) =>
+        i.product.id === productId ? { ...i, quantity: normalized } : i
+      );
+    });
+  }, []);
 
   const clearCart = useCallback(() => {
     setItems([]);
