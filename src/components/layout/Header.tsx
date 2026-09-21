@@ -51,17 +51,17 @@ export function Header() {
   return (
     <>
       <header className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
+        <div className="mx-auto flex max-w-7xl items-center gap-3 px-3 py-3 sm:px-4">
           {/* Logo */}
           <Link
             to="/"
-            className="font-heading text-xl font-bold tracking-tight text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded px-1 py-0.5 shrink-0"
+            className="font-heading text-xl font-bold tracking-tight text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded px-1 py-0.5 shrink-0 sm:text-2xl"
           >
             {empresa.nome}
           </Link>
 
           {/* Busca instantânea */}
-          <div ref={wrapperRef} className="relative flex-1 max-w-xs sm:max-w-sm">
+          <div ref={wrapperRef} className="relative min-w-0 flex-1 max-w-none">
             <div className="relative">
               <svg
                 className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"
@@ -75,11 +75,11 @@ export function Header() {
               <input
                 ref={searchRef}
                 type="search"
-                placeholder="Buscar produtos..."
+                placeholder="O que você procura?"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 onFocus={() => setSearchFocused(true)}
-                className="w-full rounded-xl border border-input bg-card py-2 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="w-full rounded-lg border border-input bg-card py-2.5 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 aria-label="Buscar produtos"
                 aria-autocomplete="list"
                 aria-expanded={showSuggestions}
@@ -118,17 +118,17 @@ export function Header() {
           <nav className="flex items-center gap-3 shrink-0">
             <Link
               to="/produtos"
-              className="hidden sm:block text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded px-2 py-1"
+              className="hidden md:block text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded px-2 py-1"
             >
               Produtos
             </Link>
 
             <button
               onClick={() => setCartOpen(true)}
-              className="relative rounded-full bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:px-4"
+              className="relative rounded-lg bg-primary px-3 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:px-4"
               aria-label={`Abrir carrinho com ${totalItems} ${totalItems === 1 ? "item" : "itens"}`}
             >
-              <span className="hidden sm:inline">Carrinho</span>
+              <span className="hidden sm:inline">Meu pedido</span>
               <svg className="sm:hidden h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
               </svg>
@@ -141,6 +141,15 @@ export function Header() {
           </nav>
         </div>
       </header>
+
+      <nav className="border-b border-border bg-card">
+        <div className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-3 py-2 sm:px-4" aria-label="Categorias do catálogo">
+          <Link to="/produtos" className="shrink-0 rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground">Todos os produtos</Link>
+          <Link to="/produtos/confeitaria" className="shrink-0 rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-foreground">Confeitaria</Link>
+          <Link to="/produtos/guloseimas" className="shrink-0 rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-foreground">Guloseimas</Link>
+          <Link to="/produtos/embalagens" className="shrink-0 rounded-full px-3 py-1.5 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-foreground">Embalagens</Link>
+        </div>
+      </nav>
 
       <CartDrawer open={cartOpen} onOpenChange={setCartOpen} />
     </>
