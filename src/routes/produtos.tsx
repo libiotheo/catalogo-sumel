@@ -406,7 +406,7 @@ function ProdutosPage() {
                   addItem(product, product.minQuantity || 1);
                   toast.success(`${product.name} adicionado ao carrinho`);
                 }}
-                className="mt-2 w-full rounded-lg bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="mt-2 w-full rounded-lg bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 Adicionar
               </button>
@@ -424,11 +424,11 @@ function ProdutosPage() {
       <Header />
       <CartDrawer open={cartOpen} onOpenChange={setCartOpen} />
 
-      <main className="mx-auto max-w-6xl px-4 py-6">
+      <main className="mx-auto max-w-7xl px-3 py-5 sm:px-4">
         {/* Título */}
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <h1 className="font-heading text-2xl font-bold text-foreground sm:text-3xl">Catálogo</h1>
+            <h1 className="font-heading text-2xl font-bold text-foreground sm:text-3xl">Catálogo de atacado</h1>
             <p className="mt-1 text-sm text-muted-foreground">
               {filtered.length} de {products.length} produtos
             </p>
@@ -453,10 +453,10 @@ function ProdutosPage() {
                 </svg>
                 <input
                   type="search"
-                  placeholder="Buscar neste filtro..."
+                  placeholder="Buscar produto, marca ou categoria..."
                   value={localBusca}
                   onChange={(e) => handleBuscaChange(e.target.value)}
-                  className="w-full rounded-xl border border-input bg-card py-2 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="w-full rounded-lg border border-input bg-card py-3 pl-10 pr-4 text-sm placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                   aria-label="Buscar produtos neste filtro"
                 />
               </div>
@@ -528,7 +528,7 @@ function ProdutosPage() {
                 </button>
               </div>
             ) : (
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
+              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
                 {filtered.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
