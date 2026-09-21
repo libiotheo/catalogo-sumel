@@ -243,7 +243,7 @@ function ProdutosPage() {
         Carrinho
         {totalItems > 0 && (
           <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#3D1F2B] text-[10px] font-bold text-white">
-            {totalItems}
+            {totalItems > 99 ? "99+" : totalItems}
           </span>
         )}
       </button>
@@ -255,12 +255,4 @@ function ProdutosPage() {
       </footer>
     </div>
   );
-}
-
-function totalItems() {
-  return 0;
-}
-function totalItems() {
-  const { items } = useCart();
-  return items.reduce((sum, i) => sum + i.quantity, 0);
 }
