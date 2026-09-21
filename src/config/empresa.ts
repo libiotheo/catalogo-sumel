@@ -20,6 +20,30 @@ export const empresa = {
     facebook: "https://facebook.com/sumel",
   },
 
+  subcategorias: {
+    confeitaria: [
+      { slug: "chocolates-coberturas", label: "Chocolates e Coberturas" },
+      { slug: "corantes-essencias", label: "Corantes e Essências" },
+      { slug: "formas-utensilios", label: "Formas e Utensílios" },
+      { slug: "decoracao-confeitos", label: "Decoração e Confeitos" },
+      { slug: "recheios-pastas", label: "Recheios e Pastas" },
+    ],
+    guloseimas: [
+      { slug: "doces-finados", label: "Doces Finados" },
+      { slug: "doces-natal", label: "Doces de Natal" },
+      { slug: "pascoa", label: "Páscoa" },
+      { slug: "festa-junina", label: "Festa Junina" },
+      { slug: "mesa-festa", label: "Mesa de Festa" },
+    ],
+    embalagens: [
+      { slug: "lanchonetes", label: "Lanchonetes" },
+      { slug: "restaurantes", label: "Restaurantes" },
+      { slug: "pizzarias", label: "Pizzarias" },
+      { slug: "acaiterias", label: "Açaiterias" },
+      { slug: "delivery", label: "Delivery" },
+    ],
+  } as const,
+
   // Links do menu
   links: {
     inicio: "/",
