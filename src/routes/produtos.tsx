@@ -26,8 +26,9 @@ function formatPrice(cents: number) {
   return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(cents / 100);
 }
 
-function getSubcategories(cat: Category) {
-  return empresa.subcategorias[cat] ?? [];
+// Sem subcategorias no dataset atual — filtro desativado
+function getSubcategories(_cat: Category) {
+  return [];
 }
 
 function allSubcategories(cat: Category) {
